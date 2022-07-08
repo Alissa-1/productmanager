@@ -2,7 +2,6 @@ package ru.netology.domain;
 
 import ru.netology.repository.ProductRepository;
 
-import java.util.Arrays;
 
 public class ProductManager {
     private ProductRepository repo;
@@ -56,3 +55,4 @@ public class ProductManager {
 //        return result;
 //    }
 }
+

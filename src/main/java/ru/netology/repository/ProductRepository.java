@@ -1,10 +1,8 @@
 package ru.netology.repository;
-
 import ru.netology.domain.Product;
 
 public class ProductRepository {
     private Product[] products = new Product[0];
-
     public Product[] findAll() {
         return products;
     }

@@ -9,10 +9,10 @@ import ru.netology.repository.ProductRepository;
 public class ProductManagerTest {
     ProductRepository repo = new ProductRepository();
     ProductManager manager = new ProductManager(repo);
-    Product item1 = new Product(1, "nameqwerty1", 10);
-    Product item2 = new Product(2, "name2", 20);
-    Product item3 = new Product(3, "name3", 30);
-    Product item4 = new Product(4, "nameqwerty4", 40);
+    Product item1 = new Book(1, "nameqwerty1", 60, "author1");
+    Product item2 = new Book(2, "name2", 70, "author2");
+    Product item3 = new Smartphone(3, "name3", 80, "manuf3");
+    Product item4 = new Smartphone(4, "naMeqwerty4", 90, "manuf4");
 
     @BeforeEach
     public void setup() {
@@ -22,16 +22,16 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldResultNoMatch() {
+    public void shouldResultNoMatchInName() {
 
         boolean expected = false;
-        boolean actual = manager.matches(item1, "qwerty10");
+        boolean actual = manager.matches(item1, "qwerty3");
 
         assertEquals(expected, actual);
     }
 
     @Test
-    public void shouldDoIfOneMatch() {
+    public void shouldDoIfOneMatchInName() {
 
         boolean expected = true;
         boolean actual = manager.matches(item1, "qwerty");
@@ -40,16 +40,34 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldSearchByIfNoMatch() {
+    public void shouldDoIfOneMatchAndUppercaseInName() {
+
+        boolean expected = true;
+        boolean actual = manager.matches(item4, "aM");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldDoIfNotMatchLowAndUppercaseInName() {
+
+        boolean expected = false;
+        boolean actual = manager.matches(item1, "aM");
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchByIfNoMatchInName() {
 
         Product[] expected = {};
-        Product[] actual = manager.searchBy("qwerty10");
+        Product[] actual = manager.searchBy("qwerty3");
 
         assertArrayEquals(expected, actual);
     }
 
     @Test
-    public void shouldSearchByIfOneMatch() {
+    public void shouldSearchByIfOneMatchInName() {
 
         Product[] expected = {item1};
         Product[] actual = manager.searchBy("qwerty1");
@@ -58,7 +76,7 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldSearchByIfTwoMatches() {
+    public void shouldSearchByIfTwoMatchesInName() {
 
         repo.add(item4);
 
@@ -67,4 +85,14 @@ public class ProductManagerTest {
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldSearchByIfAllMatchesInName() {
+
+        Product[] expected = {item1, item2, item3};
+        Product[] actual = manager.searchBy("name");
+
+        assertArrayEquals(expected, actual);
+    }
 }
+

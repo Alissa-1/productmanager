@@ -8,11 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class ProductRepositoryTest {
     ProductRepository repo = new ProductRepository();
-    Product item1 = new Product(1, "nameqwerty1", 10);
-    Product item2 = new Product(2, "name2", 20);
-    Product item3 = new Product(3, "name3", 30);
-    Product item4 = new Product(4, "nameqwerty4", 40);
-    Product item5 = new Product(5, "name5", 50);
+    Product item1 = new Book(1, "nameqwerty1", 60, "author1");
+    Product item2 = new Book(2, "name2", 70, "author2");
+    Product item3 = new Smartphone(3, "name3", 80, "manuf3");
+    Product item4 = new Smartphone(4, "nameqwerty4", 90, "manuf4");
+    Product item5 = new Smartphone(5, "name5", 100, "man5");
 
     @BeforeEach
     public void setup() {
@@ -22,7 +22,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldFindAllIfEmpty() {
+    public void shouldFindAllIfEmptyRepo() {
         repo.removeById(item1.getId());
         repo.removeById(item2.getId());
         repo.removeById(item3.getId());
@@ -34,7 +34,16 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldAddOneProductInEmpty() {
+    public void shouldFindAllIfNotEmptyRepo() {
+
+        Product[] expected = {item1, item2, item3};
+        Product[] actual = repo.findAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldAddOneProductInEmptyRepo() {
         repo.removeById(item1.getId());
         repo.removeById(item2.getId());
         repo.removeById(item3.getId());
@@ -48,7 +57,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldAddOneProductInNotEmpty() {
+    public void shouldAddOneProductInNotEmptyRepo() {
         repo.add(item4);
 
         Product[] expected = {item1, item2, item3, item4};
@@ -58,7 +67,7 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldAddTwoProducts() {
+    public void shouldAddTwoProductsInNotEmptyRepo() {
         repo.add(item4);
         repo.add(item5);
 
