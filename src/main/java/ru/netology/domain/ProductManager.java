@@ -16,22 +16,28 @@ public class ProductManager {
     }
 
     public boolean matches(Product product, String search) {
-        if (product.getName().contains(search)) {
-            return true;
-        } else {
-            return false;
+
+        if (product instanceof Book) {
+            if (product.matches(product, search)) {
+                return true;
+            }
         }
-        // или в одну строку:
-        // return product.getName().contains(search);  - contains возвращает true or false
+
+        if (product instanceof Smartphone) {
+            if (product.matches(product, search)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public Product[] searchBy(String text) {
+    public Product[] searchBy(String search) {
         Product[] result = new Product[0];
 
         for (Product product : repo.findAll()) {
             Product[] tmp = new Product[result.length + 1];
 
-            if (matches(product, text)) {
+            if (matches(product, search)) {
                 for (int i = 0; i < result.length; i++) {
                     tmp[i] = result[i];
                 }
@@ -41,9 +47,11 @@ public class ProductManager {
         }
         return result;
     }
+}
+
 
 // ДРУГОЙ СПОСОБ
-//    public Product[] searchByl(String text) {
+//    public Product[] searchByAnother(String text) {
 //        Product[] result = new Product[0];
 //
 //        for (Product product : repo.findAll()) {
@@ -55,4 +63,3 @@ public class ProductManager {
 //        }
 //        return result;
 //    }
-}
